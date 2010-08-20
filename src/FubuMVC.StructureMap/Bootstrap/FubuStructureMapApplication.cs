@@ -54,8 +54,8 @@ namespace FubuMVC.StructureMap.Bootstrap
 
             fubuBootstrapper.Bootstrap(routes);
             
-            fubuBootstrapper.Builder = ((container, args, id) =>
-                GetBuilder(container, args, id) ?? fubuBootstrapper.Builder(container, args, id));
+            //fubuBootstrapper.Builder = ((container, args, id) =>
+            //    GetBuilder(container, args, id) ?? fubuBootstrapper.Builder(container, args, id));
         }
 
         protected virtual IActionBehavior GetBuilder(IContainer container, FubuCore.Binding.ServiceArguments args, Guid beehaviorId)

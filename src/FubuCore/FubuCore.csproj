@@ -63,6 +63,7 @@
       <Link>CommonAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Binding\AggregateDictionary.cs" />
+    <Compile Include="Binding\ArrayTypeConverter.cs" />
     <Compile Include="Binding\ASPNetObjectConversionFamily.cs" />
     <Compile Include="Binding\BindingContext.cs" />
     <Compile Include="Binding\BindResult.cs" />
