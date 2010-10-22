@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -122,17 +123,14 @@ namespace FubuCore.Reflection
 
         public static Accessor GetAccessor(MemberExpression memberExpression)
         {
-            var list = new List<PropertyInfo>();
+            var list = new List<IValueGetter>();
 
-            while (memberExpression != null)
-            {
-                list.Add((PropertyInfo) memberExpression.Member);
-                memberExpression = memberExpression.Expression as MemberExpression;
-            }
+            BuildValueGetters(memberExpression, list);
 
             if (list.Count == 1)
             {
-                return new SingleProperty(list[0]);
+                var propertyValueGetter = list[0] as PropertyValueGetter;
+                return propertyValueGetter != null ? new SingleProperty(propertyValueGetter.PropertyInfo) : null;
             }
 
             list.Reverse();
@@ -144,6 +142,39 @@ namespace FubuCore.Reflection
             MemberExpression memberExpression = getMemberExpression(expression);
 
             return GetAccessor(memberExpression);
+        }
+
+        private static void BuildValueGetters(Expression expression, IList<IValueGetter> list)
+        {
+            var memberExpression = expression as MemberExpression;
+            if (memberExpression != null)
+            {
+                var propertyInfo = (PropertyInfo)memberExpression.Member;
+                list.Add(new PropertyValueGetter(propertyInfo));
+                if (memberExpression.Expression != null)
+                {
+                    BuildValueGetters(memberExpression.Expression, list);
+                }
+            }
+
+            //deals with collection indexers, list[0] will be get(0) method call expression 
+            var methodCallExpression = expression as MethodCallExpression;
+            if (methodCallExpression != null)
+            {
+                var methodInfo = methodCallExpression.Method;
+                //only supporting constant expression as means of providing index
+                var firstArgumentExpression = methodCallExpression.Arguments.First() as ConstantExpression;
+                if (firstArgumentExpression != null)
+                {
+                    var value = firstArgumentExpression.Value;
+                    var methodValueGetter = new MethodValueGetter(methodInfo, value);
+                    list.Add(methodValueGetter);
+                }
+                if (methodCallExpression.Object != null)
+                {
+                    BuildValueGetters(methodCallExpression.Object, list);
+                }
+            }
         }
 
         public static MethodInfo GetMethod<T>(Expression<Func<T, object>> expression)
