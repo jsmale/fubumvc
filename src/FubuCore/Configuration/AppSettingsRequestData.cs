@@ -22,5 +22,10 @@ namespace FubuCore.Configuration
 
             return false;
         }
+
+        public bool HasValueThatStartsWith(string key)
+        {
+            return ConfigurationManager.AppSettings.AllKeys.Any(x => x.StartsWith(key));
+        }
     }
 }

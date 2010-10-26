@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using FubuCore.Reflection;
 using FubuMVC.UI.Configuration;
 using NUnit.Framework;
@@ -28,5 +29,12 @@ namespace FubuMVC.Tests.UI
     {
         public Address Address { get; set; }
         public bool ShouldShow { get; set; }
+        public IList<LocalityViewModel> Localities { get; set; }
+    }
+
+    public class LocalityViewModel
+    {
+        public string ZipCode { get; set; }
+        public string CountyName { get; set; }
     }
 }

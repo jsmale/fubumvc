@@ -58,6 +58,7 @@ namespace FubuMVC.Core
             graph.Services.SetServiceIfNone<ISessionState, SimpleSessionState>();
 
             graph.Services.SetServiceIfNone<IAuthorizationFailureHandler, DefaultAuthorizationFailureHandler>();
+            graph.Services.SetServiceIfNone<ICollectionTypeProvider, DefaultCollectionTypeProvider>();
         }
     }
 }

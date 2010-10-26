@@ -91,6 +91,8 @@
     <Compile Include="Behaviors\InterceptExceptionBehaviorTester.cs" />
     <Compile Include="EndpointServiceTester.cs" />
     <Compile Include="LocalizationManagerTester.cs" />
+    <Compile Include="Models\CollectionPropertyBinderTester.cs" />
+    <Compile Include="Models\PropertyBinderTester.cs" />
     <Compile Include="Registration\ActionSourceMatcherTester.cs" />
     <Compile Include="Registration\attaching_behaviors_to_action_calls.cs" />
     <Compile Include="Registration\BehaviorNodeTester.cs" />
@@ -121,6 +123,7 @@
     <Compile Include="Security\AuthorizationPolicyExecutorTester.cs" />
     <Compile Include="SelfMockingServiceLocator.cs" />
     <Compile Include="UI\Configuration\ElementRequestTester.cs" />
+    <Compile Include="UI\DotNotationNamingConventionTester.cs" />
     <Compile Include="UI\Extensibility\ContentExtensionGraphTester.cs" />
     <Compile Include="UI\Extensibility\ExtensionShelfTester.cs" />
     <Compile Include="UI\Extensibility\FilteredContentExtensionTester.cs" />
